@@ -10,7 +10,7 @@ Use Python **3.12** (the verified runtime). From this project directory:
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-Copy-Item .env.example .env
+New-Item -ItemType File -Path .env
 # Edit .env as described below.
 python manage.py migrate
 python manage.py check
@@ -41,7 +41,7 @@ macOS/Linux:
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env
+touch .env
 python manage.py migrate
 python manage.py test
 python manage.py runserver 127.0.0.1:8000
@@ -49,7 +49,7 @@ python manage.py runserver 127.0.0.1:8000
 
 ## Gemini configuration and offline mode
 
-Edit `.env`:
+Create a local `.env` file in the project root and add these settings:
 
 ```dotenv
 GEMINI_API_KEY=your-own-key
@@ -91,7 +91,6 @@ frontend/     Django template and vanilla CSS/JavaScript
 tests/        Repeatable Django/API/agent integration tests with mocked model responses
 manage.py
 requirements.txt
-.env.example
 ```
 
 SQLite is stored in ignored `db.sqlite3`. All schema changes use checked-in Django migrations. `tasks.services` owns task/goal writes and audit attribution. `planner.services` owns schedule calculation and transactional approval. Views handle HTTP validation and serialization. No model receives arbitrary Python, SQL, or shell tools.
